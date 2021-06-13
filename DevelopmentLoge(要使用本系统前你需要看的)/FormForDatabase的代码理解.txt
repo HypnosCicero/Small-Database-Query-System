@@ -1,0 +1,7 @@
+里面加入了using System.Data.SqlClient用于连接数据库
+多加了三个类内全局变量：
+coonStr这是用来连接数据库所用的字符串，大致为：SERVER=DESKTOP-A9QRII5\\SQLEXPRESS;DATABASE=Text_CsFormForDatabase;Integrated Security=SSPI
+还有SqlConnection conn以及SqlCommand commd是数据库连接的必须要的两个变量，具体在代码中写的很清楚。
+就像之前说的一样，这个类基本没什么，关键是页面改改，页面上的text的名字改改，剩下的变量改改。其他的就不用动就行了。
+
+主要是这个类比较重要，它基本是在后面的所有和数据库连接的类都有用上该连接的方法，所以我为什么不重新做一个类呢？算了能用就行，再次展现出没有提前想好需求就写代码是多么 错误的一件事，导致后面复用的比较多。不过为了代码文件量的减少这个是不是也可以用里氏交换原则解释，好像可以哦，笑。

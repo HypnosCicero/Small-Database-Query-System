@@ -1,0 +1,71 @@
+这主要是登录界面的代码：
+我们来梳理一下登录的逻辑事件
+
+1.输入账号和密码，若有一个为空则提示；
+2.若输入的账号不存在：提示没有注册并且不用查找密码是否正确
+3.若账号存在密码输入错误，则提示密码错误。
+4.若输入的账号存在，并且密码正确，则进入系统中。
+5.若点击注册，则进入到注册页面。
+
+函数执行顺序：
+点击登录：
+1.private void button_Login_Click(object sender, EventArgs e)
+2.若合法(不合法是没有填）则调用Compairing();
+3.若 无次账号：则调用ShowTipRegister();//调用注册提前的窗口。
+            提示注册页面则是需要重新新建一个窗口。(若窗口名字不一样请自己更改)
+   若 密码正确：则InTheSystem();//密码正确并进入系统。
+            新建SystemIn的窗口，进入。(若窗口名字不一样请自己更改)
+   若 密码错误：则弹出警告窗口
+
+点击注册：
+ 1.调用：private void button_register_Click(object sender, EventArgs e)
+2.调用：InRegister();
+          新建新窗口。(若窗口名字不一样请自己更改)
+          同时各种提示字符的字符串重新归为0个字符串。
+
+
+分别解释
+public Form_Login()：
+    InitializeComponent();不能更改，更改相当于没有这个对象无法显示窗口
+
+    FFD = new FormForDatabase();
+    cmd = new SqlCommand();
+    cmd.Connection = FFD.conn;
+
+    这三句是用来连接数据库的，调用的是之前的窗口类，从而不用再写一遍连接语句。若你之前的变	量名称    更改，这里也需要更改，并且还更这个函数上面的变量名称，记得这些细节。
+
+
+    textBox_PassWord.PasswordChar = '*';
+    这句是用来更改密码那个text栏的密码属性中的替换字符为 * 用于遮蔽密码。可以更改替换的字符
+
+private void button_Login_Click(object sender, EventArgs e)：
+    除了Compairing()调用外都是再判断是否为空。感觉其实写的不是很好，有能力的可以想想更改为哈希查       询进行判断。或许能减少写不少if从而降低代码的复杂度。
+
+    密码正确调用比较函数Compairing();
+
+private void Compairing():
+    进行对用户数据库的内部进行比较。
+    更改的地方时SelctSecn这个字符串，要更改为你相应数据的相应表名的字符。
+    其他的就是用来判断账号密码之类的，可修改为相应的变量名称。
+
+private void ShowTipRegister()：
+      用来进入新的提示注册的页面。所以若更改名字请注意相应名称的更改，若还是报错，请双击到相应页面      进行更改变量名字。
+
+private void InTheSystem()
+
+与
+
+private void InRegister()
+
+方法作用相同，是用来进入相应的页面，更改名字同上规则。
+
+重点：
+
+private void checkBox_PassWord_CheckedChanged(object sender, EventArgs e) 
+     密码textbox旁边的单选框的方法CekedChanged
+     
+     函数名称为自己的密码textbox的名称_CheckedChanged后面的变量不变不需要更改。
+
+      后面的就换成相应的密码textbox的名称，并且字符要与上面的字符相同，上面为 * 这里也要为 * 
+
+     因为这个表示可以从*换成原本数字，就是显示代码，而为什么上面一个下面一个，上面是指一开始输入的时候就要遮盖为*，而这个*是指显示密码后再次遮蔽密码时需要的字符。
